@@ -206,4 +206,10 @@ apiController.getYouTubeVideos = (req, res, next) => {
     .catch((err) => console.log("Error fetching data from YouTube API:", err));
 };
 
+apiController.getTravelInfo = (req, res, next) => {
+  let { city } = req.params;
+  city = city.replace(" ", "%20");
+
+  const url = `https://api.sygictravelapi.com/1.2/en/places/list?query=${city}`;
+};
 module.exports = apiController;
