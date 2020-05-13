@@ -188,4 +188,20 @@ apiController.getComplexRecipes = (req, res, next) => {
     .catch((err) => console.log("Error fetching data from Spoonacular Api: ", err));
 };
 
+apiController.getYouTubeVideos = (req, res, next) => {
+  let { city } = req.params;
+  city = city.replace(" ", "%20");
+
+  const url = `https://www.googleapis.com/youtube/v3/search?q=${city}%20travel&key=AIzaSyCoe4KaM6rIOnMrfqSToB7_jPYoaGeBngA`;
+
+  axios
+    .get(url)
+    .then((data) => {
+      console.log("data we're getting back: ***", data.data.items);
+      res.locals.data.youtube = data.data.items;
+      return next();
+    })
+    .catch((err) => console.log("Error fetching data from YouTube API:", err));
+};
+
 module.exports = apiController;

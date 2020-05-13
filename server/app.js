@@ -33,6 +33,7 @@ app.get(
   apiController.getWeatherData,
   apiController.getSpotifyData,
   apiController.getComplexRecipes,
+  apiController.getYouTubeVideos,
   (req, res, next) => {
     // console.log(res.locals.data);
     return next();
