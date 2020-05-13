@@ -191,6 +191,7 @@ apiController.getComplexRecipes = (req, res, next) => {
 apiController.getYouTubeVideos = (req, res, next) => {
   let { city } = req.params;
   city = city.replace(" ", "%20");
+  console.log("city =", city);
 
   const url = `https://www.googleapis.com/youtube/v3/search?q=${city}%20travel&key=AIzaSyCoe4KaM6rIOnMrfqSToB7_jPYoaGeBngA`;
 
@@ -198,6 +199,7 @@ apiController.getYouTubeVideos = (req, res, next) => {
     .get(url)
     .then((data) => {
       console.log("data we're getting back: ***", data.data.items);
+      console.log("data from this country: ***", data.data.regionCode);
       res.locals.data.youtube = data.data.items;
       return next();
     })
