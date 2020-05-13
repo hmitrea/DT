@@ -209,17 +209,20 @@ apiController.getTravelInfo = (req, res, next) => {
   let { city } = req.params;
   city = city.replace(" ", "%20");
 
-<<<<<<< HEAD
-  const url = `https://api.sygictravelapi.com/1.2/en/places/list?limit=1&query=${city}`;
+  const url1 = `https://api.sygictravelapi.com/1.2/en/places/list?limit=1&query=${city}`;
   const options = { headers: { "x-api-key": "pi9AODHpaqUOdUTgNweA7LbzxbJFKkD7O9fZ0We8" } };
-=======
-  const url = `https://api.sygictravelapi.com/1.2/en/places/list?query=${city}`;
-  const options = { headers: { 'x-api-key': 'pi9AODHpaqUOdUTgNweA7LbzxbJFKkD7O9fZ0We8' } };
->>>>>>> master
   axios
-    .get(url, options)
+    .get(url1, options)
     .then((response) => {
-      res.locals.data.travelInfo = response.data.data.places;
+
+      const placeInfo = response.data.data.places;
+      const { id } = placeInfo[0];
+      const url2 = `https://api.sygictravelapi.com/1.1/en/places/list?parents=${id}&categories=sightseeing&limit=10`;
+
+      axios.get(url2, options);
+       .then((response) => {
+        res.locals.data.travelInfo = response.data.places
+       })
       return next();
     })
     .catch((err) => console.log("Error fetching data from Travel Site API", err));
