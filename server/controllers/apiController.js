@@ -139,31 +139,33 @@ apiController.getSpotifyData = (req, res, next) => {
 
 apiController.getComplexRecipes = (req, res, next) => {
   // const searchCuisine = req.body.searchParams;
-  const countryKey = req.params.country;
+  const countryKey = req.params.country.toLowerCase();
   const cuisineObj = {
-    Argentina: "Spanish",
-    Australia: "British",
-    Austria: "European",
-    Brazil: "Spanish",
-    Canada: "British",
-    Chile: "Spanish",
-    Colombia: "Spanish",
-    Denmark: "European",
-    Egypt: "African",
-    Estonia: "European",
-    Finland: "European",
-    France: "French",
-    Germany: "German",
-    Greece: "Greek",
-    Iceland: "European",
-    India: "Indian",
-    Indonesia: "Chinese",
-    Iran: "Mediterranean",
-    Ireland: "European",
-    Israel: "Jewish",
-    Italy: "Italian",
-    Japan: "Japanese",
+    argentina: "Spanish",
+    australia: "British",
+    austria: "European",
+    brazil: "Spanish",
+    canada: "British",
+    chile: "Spanish",
+    china: "Chinese",
+    colombia: "Spanish",
+    denmark: "European",
+    egypt: "African",
+    estonia: "European",
+    finland: "European",
+    france: "French",
+    germany: "German",
+    greece: "Greek",
+    iceland: "European",
+    india: "Indian",
+    indonesia: "Chinese",
+    iran: "Mediterranean",
+    ireland: "European",
+    israel: "Jewish",
+    italy: "Italian",
+    japan: "Japanese",
   };
+
 
   let cuisineChoice;
   if (cuisineObj.hasOwnProperty(countryKey)) {
@@ -181,7 +183,6 @@ apiController.getComplexRecipes = (req, res, next) => {
   axios
     .get(url)
     .then((response) => {
-      // console.log('data **** =', data.data.results[0]);
       res.locals.data.recipes = response.data.results;
       return next();
     })
@@ -191,15 +192,14 @@ apiController.getComplexRecipes = (req, res, next) => {
 apiController.getYouTubeVideos = (req, res, next) => {
   let { city } = req.params;
   city = city.replace(" ", "%20");
-  console.log("city =", city);
+  // console.log("city =", city);
 
   const url = `https://www.googleapis.com/youtube/v3/search?q=${city}%20travel&key=AIzaSyCoe4KaM6rIOnMrfqSToB7_jPYoaGeBngA`;
 
   axios
     .get(url)
     .then((response) => {
-      console.log("data we're getting back: ***", response.data.items);
-      console.log("data from this country: ***", response.data.regionCode);
+      // console.log("data we're getting back: ***", response.data.items);
       res.locals.data.youtube = response.data.items;
       return next();
     })
@@ -215,7 +215,6 @@ apiController.getTravelInfo = (req, res, next) => {
   axios
     .get(url,options)
     .then((response) => {
-      console.log('Places info we"re getting back ******', response.data.data.places);
       res.locals.data.travelInfo = response.data.data.places;
       return next();
     })
