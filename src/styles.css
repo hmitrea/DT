@@ -2,6 +2,7 @@
 body {
   color: white;
   background-image: url(https://files.123freevectors.com/wp-content/original/104312-yellow-stripes-pattern.jpg);
+  /* background-image: url(https://cdn.hipwallpaper.com/i/46/78/ugWdyh.png); */
   font-family: "Rubik", sans-serif;
   background-repeat: repeat-y;
   background-size: cover;
@@ -24,7 +25,7 @@ body {
 
 #food-container {
   padding: 10px;
-  opacity: 75%;
+  opacity: 90%;
   margin: 15px;
   border: solid 1px grey;
   border-radius: 10px;
@@ -44,6 +45,8 @@ body {
   margin: 1px;
   display: flex;
   flex-direction: column-reverse;
+  /* opacity: 100%; */
+  background: opacity 1;
 }
 .recipe p {
   background-color: rgb(46, 46, 40);
@@ -72,7 +75,7 @@ body {
   border: solid 1px grey;
   box-shadow: 1px 1px 10px grey;
   background-color: rgb(66, 65, 52);
-  opacity: 75%;
+  opacity: 90%;
   border-radius: 10px;
   width: 85%;
   padding: 10px;
@@ -109,7 +112,7 @@ input:focus {
   border: solid 1px grey;
   box-shadow: 1px 1px 10px grey;
   background-color: rgb(66, 65, 52);
-  opacity: 75%;
+  opacity: 90%;
   border-radius: 10px;
   width: 75%;
   padding: 10px;
@@ -127,13 +130,13 @@ input:focus {
   height: 100px;
   width: 75%;
   background-color: rgb(66, 65, 52);
-  opacity: 75%;
+  opacity: 90%;
 }
 .cityCard:hover {
   cursor: pointer;
 }
 #weather {
-  opacity: 75%;
+  opacity: 90%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -147,7 +150,7 @@ input:focus {
 }
 #window {
   padding: 10px;
-  opacity: 75%;
+  opacity: 90%;
   margin: 15px;
   border: solid 1px grey;
   border-radius: 10px;
@@ -160,7 +163,7 @@ input:focus {
   display: flex;
   justify-content: center;
   padding: 5px;
-  opacity: 75%;
+  opacity: 90%;
   margin: 10px;
   border: solid 1px grey;
   border-radius: 10px;
@@ -184,7 +187,7 @@ input:focus {
 #spotify {
   display: flex;
   justify-content: center;
-  opacity: 75%;
+  opacity: 90%;
   border-radius: 10px;
   margin: 15px;
   border: solid 1px grey;
@@ -194,7 +197,9 @@ input:focus {
   background-color: rgb(66, 65, 52);
 }
 #spotifyLogin {
+  /* width: 15%; */
   margin-top: 20%;
+  /* background: rgba(0, 0, 0, 0.5); */
 }
 #favIcon {
   align-self: flex-end;

@@ -2,7 +2,7 @@ import React from "react";
 
 //shouldve been in display folder, dont wanna move it at this point
 
-function Spotify(props) {
+const Spotify = (props) => {
   if (!props.songs.length) {
     return <div id="spotify">Sorry, looks like spotify is not available in this country</div>;
   }
@@ -34,6 +34,6 @@ function Spotify(props) {
       ></iframe>
     </div>
   );
-}
+};
 
 export default Spotify;
