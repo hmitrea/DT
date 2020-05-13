@@ -1,14 +1,10 @@
-import React from 'react';
+import React from "react";
 
 //shouldve been in display folder, dont wanna move it at this point
 
 function Spotify(props) {
   if (!props.songs.length) {
-    return (
-      <div id="spotify">
-        Sorry, looks like spotify is not available in this country
-      </div>
-    );
+    return <div id="spotify">Sorry, looks like spotify is not available in this country</div>;
   }
   // const arrayOfSongs = [];
   // for (let i = 0; i < 10; i += 1) {
@@ -28,6 +24,7 @@ function Spotify(props) {
   return (
     <div id="spotify">
       <iframe
+        className="spotify-iframe"
         src={`https://open.spotify.com/embed/playlist/${id}`}
         width="350"
         height="500"
