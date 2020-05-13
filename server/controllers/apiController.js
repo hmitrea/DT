@@ -185,7 +185,7 @@ apiController.getComplexRecipes = (req, res, next) => {
       res.locals.data.recipes = response.data.results;
       return next();
     })
-    .catch((err) => console.log("Error fetching data from Spoonacular Api: ", err))
+    .catch((err) => console.log("Error fetching data from Spoonacular Api: ", err));
 };
 
 apiController.getYouTubeVideos = (req, res, next) => {
@@ -211,9 +211,9 @@ apiController.getTravelInfo = (req, res, next) => {
   city = city.replace(" ", "%20");
 
   const url = `https://api.sygictravelapi.com/1.2/en/places/list?query=${city}`;
-  const options = {headers:{'x-api-key': 'pi9AODHpaqUOdUTgNweA7LbzxbJFKkD7O9fZ0We8'} };
+  const options = { headers: { "x-api-key": "pi9AODHpaqUOdUTgNweA7LbzxbJFKkD7O9fZ0We8" } };
   axios
-    .get(url,options)
+    .get(url, options)
     .then((response) => {
       console.log('Places info we"re getting back ******', response.data.data.places);
       res.locals.data.travelInfo = response.data.data.places;

@@ -20,7 +20,7 @@ function Weather(props) {
     return false;
   };
   //change backgrounds based on daytime
-  const gradientOpacity = 0.1;
+  const gradientOpacity = 0.25;
   if (isDay()) {
     document.body.style.backgroundImage =
       // "url(https://files.123freevectors.com/wp-content/original/104312-yellow-stripes-pattern.jpg)";
