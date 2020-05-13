@@ -1,7 +1,8 @@
 import React from "react";
 
 const Youtube = (props) => {
-  const { id } = props.youtube[0];
+  console.log("This is props.youtube", props.video);
+  const { id } = props.video[0];
 
   const { videoId } = id;
   return (

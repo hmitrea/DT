@@ -20,13 +20,13 @@ function Weather(props) {
     return false;
   };
   //change backgrounds based on daytime
-  const gradientOpacity = 0.5;
+  const gradientOpacity = 0.6;
   if (isDay()) {
     document.body.style.backgroundImage =
       // "url(https://files.123freevectors.com/wp-content/original/104312-yellow-stripes-pattern.jpg)";
       `linear-gradient(rgba(0, 0, 0, ${gradientOpacity}), rgba(0, 0, 0, ${gradientOpacity})), url(https://stockarch.com/files/12/06/panoramic_skyline.jpg)`;
   } else {
-    document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, ${gradientOpacity}), rgba(0, 0, 0, ${gradientOpacity})), url(http://4dadventurehotsprings.com/wp-content/uploads/2016/06/Dark-Grey-Pattern-Background.jpg)`;
+    document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, ${gradientOpacity}), rgba(0, 0, 0, ${gradientOpacity})), url(https://i.pinimg.com/originals/07/00/b5/0700b59b0a405697a65f09fb414e75fe.jpg)`;
   }
   //change icons based on daytime
 
