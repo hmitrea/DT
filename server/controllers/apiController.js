@@ -208,22 +208,32 @@ apiController.getYouTubeVideos = (req, res, next) => {
 apiController.getTravelInfo = (req, res, next) => {
   let { city } = req.params;
   city = city.replace(" ", "%20");
-
+  console.log("This is the city in getTravelInfo: ", city);
   const url1 = `https://api.sygictravelapi.com/1.2/en/places/list?limit=1&query=${city}`;
   const options = { headers: { "x-api-key": "pi9AODHpaqUOdUTgNweA7LbzxbJFKkD7O9fZ0We8" } };
   axios
     .get(url1, options)
-    .then((response) => {
-
-      const placeInfo = response.data.data.places;
+    .then((response1) => {
+      const placeInfo = response1.data.data.places;
       const { id } = placeInfo[0];
+      console.log("This is the id in getTravelInfo: ", id);
       const url2 = `https://api.sygictravelapi.com/1.1/en/places/list?parents=${id}&categories=sightseeing&limit=10`;
-
-      axios.get(url2, options);
-       .then((response) => {
-        res.locals.data.travelInfo = response.data.places
-       })
-      return next();
+      axios
+        .get(url2, options)
+        .then((response2) => {
+          console.log(
+            "This is the api response data after second request: ",
+            response2.data.data.places
+          );
+          res.locals.data.travelInfo = response2.data.data.places;
+          return next();
+        })
+        .catch((err) => {
+          return next({
+            log: "Error fetching travelInfo in getTravelInfo",
+            message: { error: "Error message from server: ", err },
+          });
+        });
     })
     .catch((err) => console.log("Error fetching data from Travel Site API", err));
 };

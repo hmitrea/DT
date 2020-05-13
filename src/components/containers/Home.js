@@ -14,6 +14,7 @@ import Food from "./Food";
 import Favorites from "./Favorites";
 import Attractions from "./Attractions";
 import Youtube from "./Youtube";
+import unsplashId from "../../unsplash_id";
 
 function Home() {
   const [current, setCurrent] = useState({});
@@ -53,6 +54,16 @@ function Home() {
         console.log("This is the response in grabLocationData: ", response);
         setCurrent(response);
         setQuery(email + ", " + response.userQuery);
+      });
+    const rand = Math.ceil(Math.random() * 5000);
+    fetch(
+      `https://api.unsplash.com/search/photos?query=${locationString},skyline&client_id=${unsplashId}`
+    )
+      .then((data) => data.json())
+      .then((response) => {
+        console.log("This is the response from unsplash: ", response);
+        const gradientOpacity = 0.25;
+        document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, ${gradientOpacity}), rgba(0, 0, 0, ${gradientOpacity})), url(${response.results[0].urls.full})`;
       });
   };
   // toggle fav doesnt toggle, only adds fav, there is no way to remove it, sorry guys, we had no time:(
@@ -143,7 +154,7 @@ function Home() {
           grabLocationData={grabLocationData}
           setCurrent={setCurrent}
         />
-        <Attractions features={current.features} />
+        <Attractions attractions={current.travelInfo} />
       </div>
     </div>
   );
