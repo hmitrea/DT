@@ -12,6 +12,7 @@ import Window from "./Window";
 import Search from "./Search";
 import Food from "./Food";
 import Favorites from "./Favorites";
+//import Attractions from ".Attractions"
 
 function Home() {
   const [current, setCurrent] = useState({});
@@ -97,7 +98,7 @@ function Home() {
         }}
         size="2x"
         icon={regStar}
-        style={{ color: "rgb(66, 65, 52)" }}
+        style={{ color: "white" }}
       />
     </span>
   );
@@ -135,6 +136,7 @@ function Home() {
 
         <Window country={current.countryData} />
         <Food recipes={current.recipes} />
+        <Attractions features={current.features} />
       </div>
       <div id="rightColumn">
         <Favorites
