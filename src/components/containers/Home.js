@@ -12,7 +12,8 @@ import Window from "./Window";
 import Search from "./Search";
 import Food from "./Food";
 import Favorites from "./Favorites";
-//import Attractions from ".Attractions"
+import Attractions from "./Attractions";
+import Youtube from "./Youtube";
 
 function Home() {
   const [current, setCurrent] = useState({});
@@ -120,9 +121,9 @@ function Home() {
       </div>
       <div id="middleColumn">
         <Search grabLocationData={grabLocationData} />
-
         <div id="favIcon">{FavIcon}</div>
-        <div id="youtube-container">
+        <Youtube video={current.youtube} />
+        {/* <div id="youtube-container">
           <iframe
             className="youtube-iframe"
             width="560"
@@ -132,11 +133,10 @@ function Home() {
             allow="accelerometer; autoplay;  encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
           ></iframe>
-        </div>
+        </div> */}
 
         <Window country={current.countryData} />
         <Food recipes={current.recipes} />
-        <Attractions features={current.features} />
       </div>
       <div id="rightColumn">
         <Favorites
@@ -144,6 +144,7 @@ function Home() {
           grabLocationData={grabLocationData}
           setCurrent={setCurrent}
         />
+        <Attractions features={current.features} />
       </div>
     </div>
   );
