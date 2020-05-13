@@ -1,15 +1,19 @@
-import React from "react";
+import React from 'react';
 
-const Recipe = (props) => {
+const Recipe = props => {
   return (
     <div
       className="recipe"
       style={{
         background: `url(${props.image}) center no-repeat`,
-        backgroundSize: "cover",
+        backgroundSize: 'cover',
       }}
     >
-      <p className="recipe-title">{props.title}</p>
+      <p className="recipe-title">
+        <a href={props.sourceUrl} target="_blank">
+          {props.title}
+        </a>
+      </p>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 const db = require('../models/dbModels');
 
-const queryController = { };
+const queryController = {};
 
 // Add user to database
 queryController.createOrFindUser = (req, res, next) => {
@@ -11,7 +11,8 @@ queryController.createOrFindUser = (req, res, next) => {
   const reqParams = [spotifyEmail, username];
 
   // query to find a specific user in the users table
-  const findQuery = 'SELECT id, spotify_email, username FROM users WHERE spotify_email = $1';
+  const findQuery =
+    'SELECT id, spotify_email, username FROM users WHERE spotify_email = $1';
 
   // if the findQuery returns no rows, add new user into the table with
   // their email and username taken from the spotify login
@@ -20,18 +21,18 @@ queryController.createOrFindUser = (req, res, next) => {
 
   // first look for user in users table
   db.query(findQuery, [spotifyEmail])
-    .then((response) => response)
-    .then((data) => {
+    .then(response => response)
+    .then(data => {
       // if no rows are returned, add a new user
       if (data.rowCount === 0) {
         // query to add new user to table
         db.query(createQuery, reqParams)
-          .then((response) => response)
-          .then((data) => {
+          .then(response => response)
+          .then(data => {
             res.locals.userInfo = data.rows[0];
             return next();
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
             return next({
               log:
@@ -45,7 +46,7 @@ queryController.createOrFindUser = (req, res, next) => {
         return next();
       }
     })
-    .catch((err) => {
+    .catch(err => {
       console.log(err);
       return next({
         log:
@@ -57,12 +58,12 @@ queryController.createOrFindUser = (req, res, next) => {
 
 // Add a new favourite city to database
 queryController.addFav = (req, res, next) => {
-  console.log(req.params);
+  // console.log(req.params);
   const { email } = req.params;
   const { city } = req.params;
   const { country } = req.params;
   const reqParams = [email, city, country];
-  console.log(reqParams);
+  console.log('This is the req.params in addFav: ', reqParams);
 
   // check cities table to see if any rows are returned with this city name
   const checkCityQuery = 'SELECT id FROM cities WHERE city_name = $1';
@@ -81,7 +82,6 @@ queryController.addFav = (req, res, next) => {
                         AND 
                         city_id = (SELECT id FROM cities WHERE city_name = $2)`;
 
-
   // query to insert new favourite city & country, connected by user id
   const addFavQuery = `INSERT INTO countries_cities_users (user_id, city_id, country_id)
                           VALUES (
@@ -92,17 +92,18 @@ queryController.addFav = (req, res, next) => {
 
   // first query database to see if a city exists in the cities table
   db.query(checkCityQuery, [city])
-    .then((response) => response)
-    .then((data) => {
+    .then(response => response)
+    .then(data => {
       // if data.rowCount is 0, then city does not exist in table
       if (data.rowCount === 0) {
         // query to add the city to the cities table
         db.query(addCityQuery, [city, country])
-          .then((response) => response)
-          .then((data) => data)
-          .catch((err) => {
+          .then(response => response)
+          .then(data => data)
+          .catch(err => {
             return next({
-              log: 'Error occurred in queryController.addFav when adding new city',
+              log:
+                'Error occurred in queryController.addFav when adding new city',
               message: { err: `The following error occurred: ${err}` },
             });
           });
@@ -114,14 +115,14 @@ queryController.addFav = (req, res, next) => {
       // once we've checked for the city in the database, check if fav exists
       // if not, add as favourite for our user. If yes, return next();
       db.query(checkForFav, [email, city])
-        .then((response) => response)
-        .then((data) => {
+        .then(response => response)
+        .then(data => {
           // if no rows returned from first query, add new favourite
           if (data.rowCount === 0) {
             db.query(addFavQuery, reqParams)
-              .then((response) => response)
-              .then((data) => next())
-              .catch((err) => {
+              .then(response => response)
+              .then(data => next())
+              .catch(err => {
                 return next({
                   log: 'Error occurred in queryController.addFav - adding fav',
                   message: { err: `The following error occurred: ${err}` },
@@ -131,16 +132,18 @@ queryController.addFav = (req, res, next) => {
             return next();
           }
         })
-        .catch((err) => {
+        .catch(err => {
           return next({
-            log: 'Error occurred in queryController.addFav when trying to check for favourite',
+            log:
+              'Error occurred in queryController.addFav when trying to check for favourite',
             message: { err: `The following error occurred: ${err}` },
           });
         });
     })
-    .catch((err) => {
+    .catch(err => {
       return next({
-        log: 'Error occurred in queryController.addFav when trying to create a new city',
+        log:
+          'Error occurred in queryController.addFav when trying to create a new city',
         message: { err: `The following error occurred: ${err}` },
       });
     });
@@ -167,12 +170,12 @@ queryController.deleteFav = (req, res, next) => {
                                                               OR alternate_name = $3)`;
   // delete favourite from database
   db.query(deleteQuery, reqParams)
-    .then((response) => response)
-    .then((data) => {
+    .then(response => response)
+    .then(data => {
       // if row was successfully deleted, go to next middleware
       return next();
     })
-    .catch((err) => {
+    .catch(err => {
       return next({
         log: 'Error occurred in queryController.deleteFav',
         message: { err: `The following error occurred: ${err}` },
@@ -208,8 +211,8 @@ queryController.getFavs = (req, res, next) => {
   // return array of favourites from favourites table
   // if no rows returned (i.e no faves), this will return empty array
   db.query(findFavsQuery, [userEmail])
-    .then((response) => response)
-    .then((data) => {
+    .then(response => response)
+    .then(data => {
       // adding the returned rows in the following format to res.locals:
       /* [ {city: '<city_name>', country: '<country_name>'},
             {city: '<city_name>', country: '<country_name>'} ]
@@ -217,7 +220,7 @@ queryController.getFavs = (req, res, next) => {
       res.locals.user.favsArray = data.rows;
       return next();
     })
-    .catch((err) => {
+    .catch(err => {
       return next({
         log: 'Error occurred in queryController.getFavs',
         message: { err: `The following error occurred: ${err}` },
