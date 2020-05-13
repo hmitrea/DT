@@ -20,7 +20,7 @@ function Weather(props) {
     return false;
   };
   //change backgrounds based on daytime
-  const gradientOpacity = 0.6;
+  const gradientOpacity = 0.25;
   if (isDay()) {
     document.body.style.backgroundImage =
       // "url(https://files.123freevectors.com/wp-content/original/104312-yellow-stripes-pattern.jpg)";
@@ -32,7 +32,7 @@ function Weather(props) {
 
   let icon = isDay() ? solidSun : solidMoon;
   let iconColor = isDay() ? "orange" : "white";
-  const color = "rgb(66, 65, 52)";
+  const color = "rgb(36, 35, 30)";
   //change backgrounds and icons based on weather
 
   if (props.weather.weather === "Clouds") {
@@ -67,7 +67,7 @@ function Weather(props) {
           Wind: {Math.round(props.weather.windSpeed)} km/h {<br></br>}
         </span>{" "}
       </div>
-      <div>
+      <div className="weather-icon">
         <FAIcon
           onClick={() => favClicked(id)}
           icon={icon}

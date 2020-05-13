@@ -1,30 +1,30 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin'); // at the top
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin"); // at the top
 
 module.exports = {
   watch: false,
-  mode: 'development',
-  entry: './src/index.js',
+  mode: "development",
+  entry: "./src/index.js",
   output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: "main.js",
+    path: path.resolve(__dirname, "dist"),
   },
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
       },
       {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        test: /\.s?css$/i,
+        use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
           },
         ],
       },
@@ -32,17 +32,17 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'src/index.html',
+      template: "src/index.html",
     }),
   ],
   devServer: {
     historyApiFallback: true,
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: path.join(__dirname, "dist"),
     proxy: {
-      '/verify': 'http://localhost:3000/',
-      '/api': 'http://localhost:3000/',
-      '/': 'http://localhost:3000/',
-      '/authorize': 'http://localhost:3000/',
+      "/verify": "http://localhost:3000/",
+      "/api": "http://localhost:3000/",
+      "/": "http://localhost:3000/",
+      "/authorize": "http://localhost:3000/",
     },
   },
 };
