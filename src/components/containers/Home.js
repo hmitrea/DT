@@ -110,8 +110,7 @@ function Home() {
         <div className="welcoming">
           {" "}
           <br />
-          Welcome,
-          {username}
+          Welcome, {username}
           !
           <br />
           <br />{" "}
