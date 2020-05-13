@@ -1,7 +1,7 @@
 /* eslint-disable object-curly-newline */
 const apiController = {};
-const fetch = require('node-fetch');
-const axios = require('axios');
+const fetch = require("node-fetch");
+const axios = require("axios");
 
 apiController.setQuery = (req, res, next) => {
   res.locals.data = { userQuery: `${req.params.city}, ${req.params.country}` };
@@ -13,34 +13,25 @@ apiController.getCountryData = (req, res, next) => {
   country = country.toLowerCase();
 
   // handle common inputs that result in errors unexpected country
-  if (country === 'uk') {
-    country = 'GB';
-  } else if (country === 'us' || country === 'united states') {
-    country = 'usa';
+  if (country === "uk") {
+    country = "GB";
+  } else if (country === "us" || country === "united states") {
+    country = "usa";
   }
 
   const url = `https://restcountries.eu/rest/v2/name/${country}`;
 
   fetch(url)
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       // destructure from array
       const [countryObj] = data;
 
       // destructure preferred properties
-      const {
-        name,
-        alpha2Code,
-        capital,
-        region,
-        area,
-        population,
-        languages,
-        flag,
-      } = countryObj;
+      const { name, alpha2Code, capital, region, area, population, languages, flag } = countryObj;
 
       // format languages
-      const langs = languages.map(lang => lang.name);
+      const langs = languages.map((lang) => lang.name);
 
       const countryData = {
         name,
@@ -57,17 +48,17 @@ apiController.getCountryData = (req, res, next) => {
       // console.log(res.locals.data);
       return next();
     })
-    .catch(err => next(`Error in getCountryData${err}`));
+    .catch((err) => next(`Error in getCountryData${err}`));
 };
 
 apiController.getWeatherData = (req, res, next) => {
   const { city } = req.params;
-  const apiKey = '3f38b9994196b8f88058af69468302df';
+  const apiKey = "3f38b9994196b8f88058af69468302df";
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
   fetch(url)
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       // format weather data from api
       const weatherData = {
         weather: data.weather[0].main,
@@ -85,7 +76,7 @@ apiController.getWeatherData = (req, res, next) => {
 
       return next();
     })
-    .catch(err => {
+    .catch((err) => {
       next(`Error in getWeatheryData: ${err}`);
     });
 };
@@ -97,105 +88,104 @@ apiController.getSpotifyData = (req, res, next) => {
   let country = res.locals.data.countryData.name;
   const url = `https://api.spotify.com/v1/browse/categories/toplists/playlists?country=${alpha2Code}`;
 
-  if (alpha2Code === 'US') {
-    country = 'United States';
-  } else if (alpha2Code === 'GB') {
-    country = 'United Kingdom';
+  if (alpha2Code === "US") {
+    country = "United States";
+  } else if (alpha2Code === "GB") {
+    country = "United Kingdom";
   }
 
   // use access token cookie
   const options = {
     headers: { Authorization: `Bearer ${accessToken}` },
-    mode: 'no-cors',
+    mode: "no-cors",
   };
 
   // get featured playlists from region
   fetch(url, options)
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       // get tracks href of top 50 regional playlist
+      // console.log('This is the data from Spotify-> ', data.playlists.items);
       const tracksURL = data.playlists.items.find(
-        playlist => playlist.name === `${country} Top 50`
-      ).tracks.href;
-
+        (playlist) => playlist.name === `${country} Top 50`
+      );
+      // console.log('This is the tracksURL.id -> ', tracksURL);
       // fetch track list of regional top 50
-      fetch(tracksURL, options)
-        .then(response => response.json())
-        .then(tracks => {
-          // format tracks
-          const trackList = tracks.items.map(track => ({
-            name: track.track.name,
-            by: track.track.artists[0].name,
-            url: track.track.external_urls.spotify,
-          }));
+      // fetch(tracksURL, options)
+      //   .then(response => response.json())
+      //   .then(tracks => {
+      //     // format tracks
+      //     const trackList = tracks.items.map(track => ({
+      //       name: track.track.name,
+      //       by: track.track.artists[0].name,
+      //       url: track.track.external_urls.spotify,
+      //     }));
 
-          res.locals.data.trackList = trackList;
-          return next();
-        })
-        .catch(err => {
-          console.log('error fetching specific playlist');
-          res.locals.data.trackList = [];
-          return next();
-        });
+      res.locals.data.trackList = tracksURL.id;
+      return next();
     })
-    .catch(err => {
-      console.log('spotify not available in specified country');
+    .catch((err) => {
+      console.log("error fetching specific playlist: ", err);
       res.locals.data.trackList = [];
       return next();
     });
+
+  // .catch( (err) => {
+  //   console.log('spotify not available in specified country');
+  //   res.locals.data.trackList = [];
+  //   return next();
+  // });
 };
 
 apiController.getComplexRecipes = (req, res, next) => {
   // const searchCuisine = req.body.searchParams;
   const countryKey = req.params.country;
   const cuisineObj = {
-    Argentina: 'Spanish',
-    Australia: 'British',
-    Austria: 'European',
-    Brazil: 'Spanish',
-    Canada: 'British',
-    Chile: 'Spanish',
-    Colombia: 'Spanish',
-    Denmark: 'European',
-    Egypt: 'African',
-    Estonia: 'European',
-    Finland: 'European',
-    France: 'French',
-    Germany: 'German',
-    Greece: 'Greek',
-    Iceland: 'European',
-    India: 'Indian',
-    Indonesia: 'Chinese',
-    Iran: 'Mediterranean',
-    Ireland: 'European',
-    Israel: 'Jewish',
-    Italy: 'Italian',
-    Japan: 'Japanese',
+    Argentina: "Spanish",
+    Australia: "British",
+    Austria: "European",
+    Brazil: "Spanish",
+    Canada: "British",
+    Chile: "Spanish",
+    Colombia: "Spanish",
+    Denmark: "European",
+    Egypt: "African",
+    Estonia: "European",
+    Finland: "European",
+    France: "French",
+    Germany: "German",
+    Greece: "Greek",
+    Iceland: "European",
+    India: "Indian",
+    Indonesia: "Chinese",
+    Iran: "Mediterranean",
+    Ireland: "European",
+    Israel: "Jewish",
+    Italy: "Italian",
+    Japan: "Japanese",
   };
 
   let cuisineChoice;
   if (cuisineObj.hasOwnProperty(countryKey)) {
     cuisineChoice = cuisineObj[countryKey];
   } else {
-    cuisineChoice = 'Italian';
+    cuisineChoice = "Italian";
   }
 
-  const limit = '10'; // Lowered the limit so David gets more hits
-  const apiKey = 'fc4f7bc8bd37432684adbe0ec6844a8c';
+  const limit = "10"; // Lowered the limit so David gets more hits
+  const apiKey = "fc4f7bc8bd37432684adbe0ec6844a8c";
 
   const url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&cuisine=${cuisineChoice}&addRecipeInformation=true&number=${limit}`;
 
-  console.log('url **** =', url);
+  // console.log('url **** =', url);
   axios
     .get(url)
-    .then(data => {
-      console.log('data **** =', data.data.results[0]);
+    .then((data) => {
+      // console.log('data **** =', data.data.results[0]);
       res.locals.data.recipes = data.data.results;
       return next();
     })
-    .catch(err =>
-      console.log('Error fetching data from Spoonacular Api: ', err)
-    );
+    .catch((err) => console.log("Error fetching data from Spoonacular Api: ", err));
 };
 
 module.exports = apiController;

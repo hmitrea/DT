@@ -17,7 +17,47 @@ body {
   flex-direction: column;
   width: 33%;
 }
+#food-container {
+  padding: 10px;
+  opacity: 75%;
+  margin: 15px;
+  border: solid 1px grey;
+  border-radius: 10px;
+  box-shadow: 1px 1px 10px grey;
+  background-color: rgb(66, 65, 52);
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
+.recipe {
+  height: 80px;
+  margin: 1px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+.recipe p {
+  background-color: rgb(46, 46, 40);
+  opacity: 75%;
+  align-items: center;
+  display: flex;
+  /* justify-content: center; */
+  height: auto;
+  padding: 5px;
+
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}
+.recipe a {
+  text-decoration: none;
+}
+
+#food-title {
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
 #searchForm {
   margin: 15px;
   border: solid 1px grey;

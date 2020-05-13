@@ -4,7 +4,8 @@ import City from '../display/City';
 
 function Favorites(props) {
   // props.favorites(array of cities)   props.setCurrent(function to change current)
-  if (props.favorites.length === 0) return(<div id="favorites">You don't have any favorites yet</div>)
+  if (props.favorites.length === 0)
+    return <div id="favorites">You don't have any favorites yet</div>;
   const arrayOfCities = [];
   console.log(props.favorites);
   props.favorites.forEach((city, index) => {
@@ -15,11 +16,23 @@ function Favorites(props) {
         key={`city` + index}
         name={city}
         locationString={props.cityCountrySearch}
-      />,
+      />
     );
   });
 
-  return <div id="favorites">{arrayOfCities}</div>;
+  return (
+    <div id="favorites">
+      {arrayOfCities}
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/bAgkeogi_5E"
+        frameborder="0"
+        allow="accelerometer; autoplay;  encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+  );
 }
 
 export default Favorites;
