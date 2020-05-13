@@ -191,9 +191,9 @@ apiController.getComplexRecipes = (req, res, next) => {
 apiController.getYouTubeVideos = (req, res, next) => {
   let { city } = req.params;
   city = city.replace(" ", "%20");
-  // console.log("city =", city);
+  console.log("city =", city);
 
-  const url = `https://www.googleapis.com/youtube/v3/search?q=${city}%20travel&key=AIzaSyCoe4KaM6rIOnMrfqSToB7_jPYoaGeBngA`;
+  const url = `https://www.googleapis.com/youtube/v3/search?q=${city}%20travel&key=AIzaSyC3SG6pLaOfulxfZeyl7Uy489tCAF-m1XQ`;
 
   axios
     .get(url)
@@ -209,8 +209,13 @@ apiController.getTravelInfo = (req, res, next) => {
   let { city } = req.params;
   city = city.replace(" ", "%20");
 
+<<<<<<< HEAD
   const url = `https://api.sygictravelapi.com/1.2/en/places/list?limit=1&query=${city}`;
   const options = { headers: { "x-api-key": "pi9AODHpaqUOdUTgNweA7LbzxbJFKkD7O9fZ0We8" } };
+=======
+  const url = `https://api.sygictravelapi.com/1.2/en/places/list?query=${city}`;
+  const options = { headers: { 'x-api-key': 'pi9AODHpaqUOdUTgNweA7LbzxbJFKkD7O9fZ0We8' } };
+>>>>>>> master
   axios
     .get(url, options)
     .then((response) => {
