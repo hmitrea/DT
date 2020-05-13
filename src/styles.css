@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap");
 body {
   color: white;
   background-image: url(https://files.123freevectors.com/wp-content/original/104312-yellow-stripes-pattern.jpg);
-  font-family: 'Rubik', sans-serif;
+  font-family: "Rubik", sans-serif;
   background-repeat: repeat-y;
   background-size: cover;
 }
@@ -17,6 +17,11 @@ body {
   flex-direction: column;
   width: 33%;
 }
+
+#middleColumn {
+  align-items: center;
+}
+
 #food-container {
   padding: 10px;
   opacity: 75%;
@@ -25,14 +30,17 @@ body {
   border-radius: 10px;
   box-shadow: 1px 1px 10px grey;
   background-color: rgb(66, 65, 52);
-  width: 75%;
+  width: 85%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
 .recipe {
-  height: 80px;
+  width: 45%;
+  min-width: 120px;
+  height: 100px;
   margin: 1px;
   display: flex;
   flex-direction: column-reverse;
@@ -57,6 +65,7 @@ body {
   font-size: 1.5rem;
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 #searchForm {
   margin: 15px;
@@ -65,8 +74,14 @@ body {
   background-color: rgb(66, 65, 52);
   opacity: 75%;
   border-radius: 10px;
-  width: 75%;
+  width: 85%;
   padding: 10px;
+}
+.spotify-iframe {
+  width: 95%;
+}
+.youtube-iframe {
+  width: 120%;
 }
 a {
   color: white;
@@ -138,12 +153,25 @@ input:focus {
   border-radius: 10px;
   box-shadow: 1px 1px 10px grey;
   background-color: rgb(66, 65, 52);
-  width: 75%;
+  width: 85%;
+}
+
+#youtube-container {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  opacity: 75%;
+  margin: 10px;
+  border: solid 1px grey;
+  border-radius: 10px;
+  box-shadow: 1px 1px 10px grey;
+  background-color: rgb(66, 65, 52);
+  width: 95%;
 }
 .weather-text {
   color: white;
   font-size: 20px;
-  font-family: 'Rubik', sans-serif;
+  font-family: "Rubik", sans-serif;
 }
 #weather-texts {
   display: flex;
@@ -154,6 +182,8 @@ input:focus {
   color: black;
 }
 #spotify {
+  display: flex;
+  justify-content: center;
   opacity: 75%;
   border-radius: 10px;
   margin: 15px;
@@ -169,6 +199,7 @@ input:focus {
 #favIcon {
   align-self: flex-end;
   padding-right: 20%;
+  margin-bottom: 10px;
 }
 .song {
   display: flex;
@@ -190,4 +221,12 @@ input:focus {
 form {
   display: flex;
   flex-direction: column;
+}
+.country-data {
+  color: white;
+  font-weight: 600;
+}
+
+.country-list-item {
+  font-weight: 100;
 }

@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import City from '../display/City';
+import City from "../display/City";
 
 function Favorites(props) {
   // props.favorites(array of cities)   props.setCurrent(function to change current)
@@ -20,19 +20,7 @@ function Favorites(props) {
     );
   });
 
-  return (
-    <div id="favorites">
-      {arrayOfCities}
-      <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/bAgkeogi_5E"
-        frameborder="0"
-        allow="accelerometer; autoplay;  encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>
-    </div>
-  );
+  return <div id="favorites">{arrayOfCities}</div>;
 }
 
 export default Favorites;
