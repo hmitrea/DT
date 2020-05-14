@@ -74,7 +74,7 @@ queryController.addFav = (req, res, next) => {
                               $1, 
                               (SELECT id FROM countries WHERE country_name = $2 OR alternate_name = $2)
                           )`;
-
+                         
   // check if favourite exists in database first
   const checkForFav = `SELECT * FROM countries_cities_users
                         WHERE 
