@@ -18,7 +18,7 @@ describe('Unit tests', () => {
     it('Creates a left, middle, and right column inside the main child', () => {
       expect(wrapper.children().getElements()[0].props.id).toEqual('leftColumn');
       expect(wrapper.children().getElements()[1].props.id).toEqual('middleColumn');
-      expect(wrapper.children().getElements()[2].props.id).toEqual('rightColumn');
+      expect(wrapper.children().getElements()[2].props.classN).toEqual('rightColumn');
     });
   });
   describe('Food.js', () => {

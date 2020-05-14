@@ -37,8 +37,12 @@ const Home = () => {
     fetch("http://localhost:8080/api/user")
       .then((res) => res.json())
       .then((user) => {
+        console.log('Api/user path')
         setUserName(user.display_name);
+        console.log('line 42 before email')
         setEmail(user.email);
+        console.log('line 44 after email')
+        console.log('Updating favs: ', user.favsArray)
         setFavorites(user.favsArray);
       })
       .catch((err) => err);
@@ -83,6 +87,7 @@ const Home = () => {
     })
       .then((data) => data.json())
       .then((updatedFavs) => {
+        console.log('Updating favs: ', updatedFavs)
         setFavorites(updatedFavs);
         // receive new array of favs and change the state
       });
@@ -97,7 +102,7 @@ const Home = () => {
           <div className="welcoming">Welcome, {username}!</div>
         </div>
         <div id="middleColumn"></div>
-        <div id="rightColumn">
+        <div className="rightColumn">
           <Favorites
             favorites={favorites}
             grabLocationData={grabLocationData}
@@ -121,22 +126,22 @@ const Home = () => {
       />
   </span>
   );
-  const values = current.userQuery.split(",").map((elem) => elem.trim());
-  // If the favorites array is not empty
-  if (favorites.length > 0){
-    // Check if favorites has an object where the city is equal to our current city.
-    const favIcon = favorites.some(obj => obj['city']=values[0]) ? (
-      <span className="favIcon solid-icon">
-        <FAIcon
-          onClick={() => {
-            toggleFav(query);
-          }}
-          size="2x"
-          icon={solidStar}
-          style={{ color: "yellow" }}
-        />
-      </span>) : favIcon
-  }
+  // const values = current.userQuery.split(",").map((elem) => elem.trim());
+  // // If the favorites array is not empty
+  // if (favorites.length > 0){
+  //   // Check if favorites has an object where the city is equal to our current city.
+  //   const favIcon = favorites.some(obj => obj['city']=values[0]) ? (
+  //     <span className="favIcon solid-icon">
+  //       <FAIcon
+  //         onClick={() => {
+  //           toggleFav(query);
+  //         }}
+  //         size="2x"
+  //         icon={solidStar}
+  //         style={{ color: "yellow" }}
+  //       />
+  //     </span>) : favIcon
+  // }
 
   return (
     <div id="main">

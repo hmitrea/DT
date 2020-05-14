@@ -33,7 +33,7 @@ app.get(
   apiController.getWeatherData,
   apiController.getSpotifyData,
   apiController.getComplexRecipes,
-  //apiController.getYouTubeVideos,
+  apiController.getYouTubeVideos,
   apiController.getTravelInfo,
   (req, res) => res.status(200).send(res.locals.data)
 );
