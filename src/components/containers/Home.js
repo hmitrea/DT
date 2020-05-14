@@ -26,6 +26,8 @@ const Home = () => {
   const [favorites, setFavorites] = useState([]);
   // array of favs we got on initial load
   const [query, setQuery] = useState("");
+  // FavIcon condition
+  const [iconStatus, setFavIcon] = useState(false);
   // save users search in case he wants to add it to favs(we only save his query, not actual country data
   // since its different every time)
 
