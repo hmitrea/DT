@@ -6,12 +6,12 @@ const queryController = {};
 queryController.createOrFindUser = (req, res, next) => {
   // middleware to take user info sent from spotify login
   // if user already exists in table, add user to users table in db
-  const username = res.locals.user.display_name;
-  const spotifyEmail = res.locals.user.email;
+  const username = res.locals.user.display_name.toLowerCase();
+  const spotifyEmail = res.locals.user.email.toLowerCase();
   const reqParams = [spotifyEmail, username];
 
   // query to find a specific user in the users table
-  const findQuery = 'SELECT id, spotify_email, username FROM users WHERE spotify_email = $1';
+  const findQuery = 'SELECT id, spotify_email, username FROM users WHERE lower(spotify_email) = $1';
 
   // if the findQuery returns no rows, add new user into the table with
   // their email and username taken from the spotify login
@@ -53,53 +53,62 @@ queryController.createOrFindUser = (req, res, next) => {
     });
 };
 
+const toTitleCase = (phrase) => {
+  return phrase
+    .toLowerCase()
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
+
 // Add a new favourite city to database
 queryController.addFav = (req, res, next) => {
   // console.log(req.params);
-  const { email } = req.params;
-  const { city } = req.params;
+  const email = req.params.email.toLowerCase();
+  const city = req.params.city.toLowerCase();
   const country = req.params.country.toLowerCase();
+  const capitalizedCity = toTitleCase(city);
 
   const reqParams = [email, city, country];
   console.log('This is the req.params in addFav: ', reqParams);
 
   // check cities table to see if any rows are returned with this city name
-  const checkCityQuery = 'SELECT id FROM cities WHERE city_name = $1';
+  const checkCityQuery = 'SELECT id FROM cities WHERE lower(city_name) = $1';
 
   // if city not in cities table, add to cities table
   const addCityQuery = `INSERT INTO cities (city_name, country_id)
                           VALUES (
                               $1, 
-                              (SELECT id FROM countries WHERE lower(country_name) = $2 OR alternate_name = $2)
+                              (SELECT id FROM countries WHERE lower(country_name) = $2 OR lower(alternate_name) = $2)
                           )`;
 
   // check if favourite exists in database first
   const checkForFav = `SELECT * FROM countries_cities_users
                         WHERE 
-                        user_id = (SELECT id FROM users WHERE spotify_email = $1)
+                        user_id = (SELECT id FROM users WHERE lower(spotify_email) = $1)
                         AND 
-                        city_id = (SELECT id FROM cities WHERE city_name = $2)`;
+                        city_id = (SELECT id FROM cities WHERE lower(city_name) = $2)`;
 
   // query to insert new favourite city & country, connected by user id
   const addFavQuery = `INSERT INTO countries_cities_users (user_id, city_id, country_id)
                           VALUES (
-                              (SELECT id FROM users WHERE spotify_email = $1),
-                              (SELECT id FROM cities WHERE city_name = $2),
-                              (SELECT id FROM countries WHERE lower(country_name) = $3 OR alternate_name = $3)
+                              (SELECT id FROM users WHERE lower(spotify_email) = $1),
+                              (SELECT id FROM cities WHERE lower(city_name) = $2),
+                              (SELECT id FROM countries WHERE lower(country_name) = $3 OR lower(alternate_name) = $3)
                           )`;
 
   const deleteQuery = `DELETE 
                          FROM countries_cities_users 
                         WHERE user_id = (SELECT id 
                         FROM users 
-                       WHERE spotify_email = $1)
+                       WHERE lower(spotify_email) = $1)
                          AND city_id = (SELECT id 
                                           FROM cities 
-                                         WHERE city_name = $2)
+                                         WHERE lower(city_name) = $2)
                          AND country_id = (SELECT id 
                                              FROM countries 
-                                            WHERE country_name = $3
-                                               OR alternate_name = $2)`;
+                                            WHERE lower(country_name) = $3
+                                               OR lower(alternate_name) = $2)`;
 
   // first query database to see if a city exists in the cities table
   db.query(checkCityQuery, [city])
@@ -131,7 +140,10 @@ queryController.addFav = (req, res, next) => {
           if (data.rowCount === 0) {
             db.query(addFavQuery, reqParams)
               .then((response) => response)
-              .then((data) => next())
+              .then((data) => {
+                console.log('queryController.addFav for city -', city);
+                return next();
+              })
               .catch((err) => {
                 return next({
                   log: 'Error occurred in queryController.addFav - adding fav',
@@ -141,11 +153,11 @@ queryController.addFav = (req, res, next) => {
             // if rows returned then delete favorite.
           } else {
             db.query(deleteQuery, [email, city, country])
-              .then((response) => {
-                console.log('response **** ', response);
-                return response;
+              .then((response) => response)
+              .then((data) => {
+                console.log('queryController.deleteFav for city -', city);
+                return next();
               })
-              .then((data) => next())
               .catch((err) => {
                 return next({
                   log: 'Error occurred in queryController.deleteFav - delete fav',
@@ -172,36 +184,36 @@ queryController.addFav = (req, res, next) => {
 // delete a favourite from database
 // this middleware was not used yet in app.js / front-end, but query should
 // work ok after integration
-queryController.deleteFav = (req, res, next) => {
-  // add a favourite city (+ country) to database
-  // takes information from params sent from request
-  const { email } = req.params;
-  const { city } = req.params;
-  const { country } = req.params;
-  const reqParams = [email, city, country];
+// queryController.deleteFav = (req, res, next) => {
+//   // add a favourite city (+ country) to database
+//   // takes information from params sent from request
+//   const { email } = req.params;
+//   const { city } = req.params;
+//   const { country } = req.params;
+//   const reqParams = [email, city, country];
 
-  const deleteQuery = `DELETE FROM countries_cities_users
-                      WHERE 
-                      user_id = (SELECT id FROM users WHERE spotify_email = $1)
-                      AND
-                      city_id = (SELECT id FROM cities WHERE city_name = $2)
-                      AND 
-                      country_id = (SELECT id FROM countries WHERE country_name = $3 
-                                                              OR alternate_name = $3)`;
-  // delete favourite from database
-  db.query(deleteQuery, reqParams)
-    .then((response) => response)
-    .then((data) => {
-      // if row was successfully deleted, go to next middleware
-      return next();
-    })
-    .catch((err) => {
-      return next({
-        log: 'Error occurred in queryController.deleteFav',
-        message: { err: `The following error occurred: ${err}` },
-      });
-    });
-};
+//   const deleteQuery = `DELETE FROM countries_cities_users
+//                       WHERE
+//                       user_id = (SELECT id FROM users WHERE spotify_email = $1)
+//                       AND
+//                       city_id = (SELECT id FROM cities WHERE city_name = $2)
+//                       AND
+//                       country_id = (SELECT id FROM countries WHERE country_name = $3
+//                                                               OR alternate_name = $3)`;
+//   // delete favourite from database
+//   db.query(deleteQuery, reqParams)
+//     .then((response) => response)
+//     .then((data) => {
+//       // if row was successfully deleted, go to next middleware
+//       return next();
+//     })
+//     .catch((err) => {
+//       return next({
+//         log: 'Error occurred in queryController.deleteFav',
+//         message: { err: `The following error occurred: ${err}` },
+//       });
+//     });
+// };
 
 // get information about favourites from database (city and country names)
 queryController.getFavs = (req, res, next) => {
@@ -212,10 +224,10 @@ queryController.getFavs = (req, res, next) => {
   // if req.params.email is undefined, use res.locals.user.email
   let userEmail;
   if (req.params.email) {
-    userEmail = req.params.email;
+    userEmail = req.params.email.toLowerCase();
     res.locals.user = {};
   } else {
-    userEmail = res.locals.user.email;
+    userEmail = res.locals.user.email.toLowerCase();
   }
 
   // using the user's unique email inside users table to get user's id,
@@ -226,7 +238,7 @@ queryController.getFavs = (req, res, next) => {
                         JOIN cities ON (countries_cities_users.city_id = cities.id)
                         JOIN countries ON (countries_cities_users.country_id = countries.id)
                         WHERE countries_cities_users.user_id = 
-                        (SELECT id FROM users WHERE spotify_email = $1)`;
+                        (SELECT id FROM users WHERE lower(spotify_email) = $1)`;
 
   // return array of favourites from favourites table
   // if no rows returned (i.e no faves), this will return empty array
