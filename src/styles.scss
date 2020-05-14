@@ -22,13 +22,15 @@ body {
   display: flex;
   flex-direction: column;
   width: 33%;
+  align-items: center;
 }
 
 #middleColumn {
   align-items: center;
 }
 
-#food-container {
+#food-container,
+#attractions-list {
   padding: 10px;
   opacity: 90%;
   margin: 15px;
@@ -53,7 +55,8 @@ body {
   /* opacity: 100%; */
   background: opacity 1;
 }
-.recipe p {
+.recipe p,
+.attraction p {
   background-color: rgb(46, 46, 40);
   opacity: 75%;
   align-items: center;
@@ -65,16 +68,28 @@ body {
   margin-block-start: 0em;
   margin-block-end: 0em;
 }
-.recipe a {
+.recipe a,
+.attraction a {
   text-decoration: none;
 }
 
-#food-title {
+#food-title,
+#attractions-title {
   font-size: 1.5rem;
   display: flex;
   justify-content: center;
   width: 100%;
 }
+
+.attraction {
+  width: 45%;
+  min-width: 120px;
+  height: 150px;
+  margin: 1px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
 #searchForm {
   margin: 15px;
   border: solid 1px grey;
@@ -138,6 +153,9 @@ input:focus {
   width: 75%;
   background-color: $containerColor;
   opacity: 90%;
+  .cityName {
+    max-width: 97%;
+  }
 }
 .cityCard:hover {
   cursor: pointer;
