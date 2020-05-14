@@ -1,5 +1,5 @@
-import React from "react";
-import Attraction from "../display/Attraction";
+import React from 'react';
+import Attraction from '../display/Attraction';
 
 const Attractions = (props) => {
   const attractionArr = [];
@@ -16,8 +16,8 @@ const Attractions = (props) => {
     );
   });
   return (
-    <div id="attractions-list">
-      <h1 id="attractions-title">Sights to See</h1>
+    <div id='attractions-list'>
+      <h1 id='attractions-title'>Sights to See</h1>
       {attractionArr}
     </div>
   );

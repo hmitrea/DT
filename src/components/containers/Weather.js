@@ -9,7 +9,7 @@ import { faCloud as solidCloud } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon as FAIcon } from "@fortawesome/react-fontawesome";
 
-function Weather(props) {
+const Weather = (props) => {
   //function to check if its day/night
   const isDay = () => {
     const timeNow = Date.now();

@@ -1,15 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap");
 
-$containerColor: rgb(36, 35, 30);
+$containerColor: rgb(27, 25, 25);
+$containerOpacity: 90%;
 
 body {
+  padding: 0;
+  margin:0;
   color: white;
   /* background-image: url(https://files.123freevectors.com/wp-content/original/104312-yellow-stripes-pattern.jpg); */
-  background-image: url(https://wallpaperaccess.com/full/706913.jpg);
+  background-image:  url(https://wallpaperaccess.com/full/706913.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
   font-family: "Rubik", sans-serif;
+  height: 100vh;
   // background-repeat: repeat-y;
 }
 #main {
@@ -32,7 +36,7 @@ body {
 #food-container,
 #attractions-list {
   padding: 10px;
-  opacity: 90%;
+  opacity: $containerOpacity;
   margin: 15px;
   border: solid 1px grey;
   border-radius: 10px;
@@ -95,13 +99,13 @@ body {
   border: solid 1px grey;
   box-shadow: 1px 1px 10px grey;
   background-color: $containerColor;
-  opacity: 90%;
+  opacity: $containerOpacity;
   border-radius: 10px;
   width: 85%;
   padding: 10px;
 }
 .spotify-iframe {
-  width: 95%;
+  width: 99%;
 }
 
 a {
@@ -118,27 +122,31 @@ input {
 input:focus {
   outline: none !important;
 }
+
 #favorites {
   margin: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
+
   #favorites-title {
     -webkit-text-stroke: 1px black;
     font-weight: 700;
   }
 }
+
 .welcoming {
   text-align: center;
   margin: 15px;
   border: solid 1px grey;
   box-shadow: 1px 1px 10px grey;
   background-color: $containerColor;
-  opacity: 90%;
+  opacity: $containerOpacity;
   border-radius: 10px;
   width: 75%;
   padding: 10px;
 }
+
 .cityCard {
   display: flex;
   flex-direction: column;
@@ -152,7 +160,8 @@ input:focus {
   height: 100px;
   width: 75%;
   background-color: $containerColor;
-  opacity: 90%;
+  opacity: $containerOpacity;
+
   .cityName {
     max-width: 97%;
   }
@@ -161,7 +170,7 @@ input:focus {
   cursor: pointer;
 }
 #weather {
-  opacity: 90%;
+  opacity: $containerOpacity;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -173,23 +182,55 @@ input:focus {
   width: 75%;
   padding: 10px;
   background-color: $containerColor;
+
+  .weather-text {
+    color: white;
+    font-size: 20px;
+    font-family: "Rubik", sans-serif;
+  }
+  #weather-texts {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  .weather-icon {
+    width: 50%;
+  }
+  
+  svg.svg-inline--fa.fa-cloud.fa-w-20.fas.fa-camera.fa-3x {
+    height: 100%;
+    width: 100%;
+  }
+  
+  svg.svg-inline--fa.fa-sun.fa-w-16.fas.fa-camera.fa-3x {
+    height: 100%;
+    width: 100%;
+  }
 }
+
 #window {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 10px;
-  opacity: 90%;
+  opacity: $containerOpacity;
   margin: 15px;
   border: solid 1px grey;
   border-radius: 10px;
   box-shadow: 1px 1px 10px grey;
   background-color: $containerColor;
   width: 85%;
+  #country-name {
+    display:flex;
+    justify-content: center;
+  }
 }
 
 #youtube-container {
   display: flex;
   justify-content: center;
   padding: 5px;
-  opacity: 90%;
+  opacity: $containerOpacity;
   margin: 10px;
   border: solid 1px grey;
   border-radius: 10px;
@@ -200,23 +241,16 @@ input:focus {
     width: 100%;
   }
 }
-.weather-text {
-  color: white;
-  font-size: 20px;
-  font-family: "Rubik", sans-serif;
-}
-#weather-texts {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
+
+
 .black {
   color: black;
 }
+
 #spotify {
   display: flex;
   justify-content: center;
-  opacity: 90%;
+  opacity: $containerOpacity;
   border-radius: 10px;
   margin: 15px;
   border: solid 1px grey;
@@ -225,53 +259,43 @@ input:focus {
   padding: 10px;
   background-color: $containerColor;
 }
+
 #login-container {
   display: flex;
   justify-content: center;
+
+  #spotifyLogin {
+    min-width: 200px;
+    width: 15%;
+    margin-top: 20%;
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 5px;
+    padding: 20px;
+    a {
+      color: white;
+      text-decoration: none;
+      background-color: rgb(38, 197, 38);
+      padding: 10px;
+      /* display: flex; */
+      /* justify-content: center; */
+      border-radius: 5px;
+      transition: background 0.2s;
+    }
+    a:hover {
+      background-color: rgb(26, 129, 26);
+    }
+    a:active {
+      background-color: rgb(16, 85, 16);
+    }
+  }
 }
-#spotifyLogin {
-  min-width: 200px;
-  width: 15%;
-  margin-top: 20%;
-  background: rgba(0, 0, 0, 0.85);
-  border-radius: 5px;
-  padding: 20px;
-}
-#spotifyLogin a {
-  color: white;
-  text-decoration: none;
-  background-color: rgb(38, 197, 38);
-  padding: 10px;
-  /* display: flex; */
-  /* justify-content: center; */
-  border-radius: 5px;
-  transition: background 0.2s;
-}
-#spotifyLogin a:hover {
-  background-color: rgb(26, 129, 26);
-}
-#spotifyLogin a:active {
-  background-color: rgb(16, 85, 16);
-}
+
 #favIcon {
   align-self: flex-end;
   padding-right: 20%;
   margin-bottom: 10px;
 }
-.song {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  height: 50px;
-  border: solid 1px grey;
-  border-radius: 2px;
-  box-shadow: 1px 1px 10px white;
-  padding: 3px;
-  margin: 10px;
-  color: white;
-  background-color: black;
-}
+
 #searchBar {
   width: 100%;
 }

@@ -17,8 +17,8 @@ const Food = props => {
     );
   });
   return (
-    <div id="food-container">
-      <p id="food-title">Great Local Recipes!</p>
+    <div id='food-container'>
+      <p id='food-title'>Great Local Recipes!</p>
       {recipeArr}
     </div>
   );
