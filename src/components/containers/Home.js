@@ -16,7 +16,7 @@ import Attractions from "./Attractions";
 import Youtube from "./Youtube";
 import unsplashId from "../../unsplash_id";
 
-function Home() {
+const Home = () => {
   const [current, setCurrent] = useState({});
   // current is the bigAssObject we receive from "grabLocationData" that feeds most of the components with data
   const [username, setUserName] = useState("");
@@ -55,15 +55,16 @@ function Home() {
         setCurrent(response);
         setQuery(email + ", " + response.userQuery);
       });
-    const rand = Math.ceil(Math.random() * 5000);
+    
     fetch(
       `https://api.unsplash.com/search/photos?query=${locationString},skyline&client_id=${unsplashId}`
     )
       .then((data) => data.json())
       .then((response) => {
         console.log("This is the response from unsplash: ", response);
-        const gradientOpacity = 0.25;
-        document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, ${gradientOpacity}), rgba(0, 0, 0, ${gradientOpacity})), url(${response.results[0].urls.full})`;
+        const gradientOpacity = 0.2;
+        const rand = Math.floor(Math.random() * 1000);
+        document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, ${gradientOpacity}), rgba(0, 0, 0, ${gradientOpacity})), url(${response.results[1].urls.full})`;
       });
   };
   // toggle fav doesnt toggle, only adds fav, there is no way to remove it, sorry guys, we had no time:(
@@ -127,6 +128,7 @@ function Home() {
           <br />{" "}
         </div>
         <Weather weather={current.weatherData} />
+        <Window country={current.countryData} />
         <Spotify songs={current.trackList} />
       </div>
       <div id="middleColumn">
@@ -144,9 +146,8 @@ function Home() {
             allowfullscreen
           ></iframe>
         </div> */}
-
-        <Window country={current.countryData} />
-        <Food recipes={current.recipes} />
+        <Attractions attractions={current.travelInfo} />
+        
       </div>
       <div id="rightColumn">
         <Favorites
@@ -154,7 +155,7 @@ function Home() {
           grabLocationData={grabLocationData}
           setCurrent={setCurrent}
         />
-        <Attractions attractions={current.travelInfo} />
+        <Food recipes={current.recipes} />
       </div>
     </div>
   );

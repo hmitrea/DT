@@ -3,7 +3,7 @@
 import React from 'react';
 import { useState } from 'react';
 
-function Search(props) {
+const Search = (props) => {
   const [value, setValue] = useState('');
   const handleSubmit = (e) => {
     e.preventDefault();
