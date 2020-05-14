@@ -1,13 +1,13 @@
 import React from "react";
 
 const Youtube = (props) => {
-  // console.log("This is props.youtube", props.video);
-  // const { id } = props.video[0];
+  console.log("This is props.youtube", props.video);
+  const { id } = props.video[0];
 
-  // const { videoId } = id;
+  const { videoId } = id;
   return (
     <div id="youtube-container">
-      {/* <iframe
+      { <iframe
         className="youtube-iframe"
         width="560"
         height="315"
@@ -15,7 +15,7 @@ const Youtube = (props) => {
         frameborder="0"
         allow="accelerometer; autoplay;  encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
-      ></iframe> */}
+      ></iframe>}
     </div>
   );
 };
