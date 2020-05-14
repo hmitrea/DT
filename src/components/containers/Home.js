@@ -128,6 +128,7 @@ const Home = () => {
           <br />{" "}
         </div>
         <Weather weather={current.weatherData} />
+        <Window country={current.countryData} />
         <Spotify songs={current.trackList} />
       </div>
       <div id="middleColumn">
@@ -145,9 +146,8 @@ const Home = () => {
             allowfullscreen
           ></iframe>
         </div> */}
-
-        <Window country={current.countryData} />
-        <Food recipes={current.recipes} />
+        <Attractions attractions={current.travelInfo} />
+        
       </div>
       <div id="rightColumn">
         <Favorites
@@ -155,7 +155,7 @@ const Home = () => {
           grabLocationData={grabLocationData}
           setCurrent={setCurrent}
         />
-        <Attractions attractions={current.travelInfo} />
+        <Food recipes={current.recipes} />
       </div>
     </div>
   );
