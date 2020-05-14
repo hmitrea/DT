@@ -11,7 +11,7 @@ const Window = (props) => {
   return (
     <div id="window">
       <div id='country-name'>{props.country.name}</div>
-      <img width="100%" height="200" src={props.country.flag} />
+      <img className='country-flag' src={props.country.flag} />
       <Info countryData={props.country} />
       <a id="wiki" href={`https://en.wikipedia.org/wiki/${props.country.name}`}>
         Read more on wiki!

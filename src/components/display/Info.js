@@ -9,7 +9,7 @@ function Info(props) {
   );
 
   return (
-    <div>
+    <div id='country-info'>
       <ul>
         <li className="country-list-item">
           Capital: <span className="country-data">{props.countryData.capital}</span>
