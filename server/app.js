@@ -35,10 +35,6 @@ app.get(
   apiController.getComplexRecipes,
   //apiController.getYouTubeVideos,
   apiController.getTravelInfo,
-  (req, res, next) => {
-    // console.log(res.locals.data);
-    return next();
-  },
   (req, res) => res.status(200).send(res.locals.data)
 );
 
@@ -46,9 +42,9 @@ app.post(
   '/api/toggleFav/:city&:country&:email',
   queryController.addFav,
   queryController.getFavs,
-  queryController.deleteFav,
   (req, res) => {
-    res.status(200).send(res.locals.user.favsArray);
+    console.log('**** inside the toggleFav *******');
+    return res.status(200).send(res.locals.user.favsArray);
   }
 );
 
@@ -57,7 +53,10 @@ app.get(
   userController.getUserData,
   queryController.createOrFindUser,
   queryController.getFavs,
-  (req, res) => res.status(200).send(res.locals.user)
+  (req, res) => {
+    console.log('***** inside the api user ******');
+    return res.status(200).send(res.locals.user);
+  }
 );
 
 app.use(
