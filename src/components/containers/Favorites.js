@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import City from "../display/City";
+import City from '../display/City';
 
 function Favorites(props) {
   // props.favorites(array of cities)   props.setCurrent(function to change current)
   if (props.favorites.length === 0)
-    return <div id="favorites">You don't have any favorites yet</div>;
+    return <div id='favorites'>You don't have any favorites yet</div>;
   const arrayOfCities = [];
   console.log(props.favorites);
   props.favorites.forEach((city, index) => {
@@ -21,8 +21,8 @@ function Favorites(props) {
   });
 
   return (
-    <div id="favorites">
-      <h1 id="favorites-title">Favorite Cities</h1>
+    <div id='favorites'>
+      <h1 id='favorites-title'>Favorite Cities</h1>
       {arrayOfCities}
     </div>
   );

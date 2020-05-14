@@ -6,11 +6,11 @@ import { FontAwesomeIcon as FAIcon } from '@fortawesome/react-fontawesome';
 import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as regStar } from '@fortawesome/free-regular-svg-icons';
 
-function Window(props) {
+const Window = (props) => {
   // props.country={current.countryData} props.addFavorite={setFavorites} />
   return (
     <div id="window">
-      <div>{props.country.name}</div>
+      <div id='country-name'>{props.country.name}</div>
       <img width="100%" height="200" src={props.country.flag} />
       <Info countryData={props.country} />
       <a id="wiki" href={`https://en.wikipedia.org/wiki/${props.country.name}`}>
