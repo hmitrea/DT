@@ -166,6 +166,7 @@ apiController.getComplexRecipes = (req, res, next) => {
     japan: "Japanese",
   };
 
+
   let cuisineChoice;
   if (cuisineObj.hasOwnProperty(countryKey)) {
     cuisineChoice = cuisineObj[countryKey];
@@ -185,7 +186,7 @@ apiController.getComplexRecipes = (req, res, next) => {
       res.locals.data.recipes = response.data.results;
       return next();
     })
-    .catch((err) => console.log("Error fetching data from Spoonacular Api: ", err));
+    .catch((err) => console.log("Error fetching data from Spoonacular Api: ", err))
 };
 
 apiController.getYouTubeVideos = (req, res, next) => {
@@ -208,9 +209,15 @@ apiController.getYouTubeVideos = (req, res, next) => {
 apiController.getTravelInfo = (req, res, next) => {
   let { city } = req.params;
   city = city.replace(" ", "%20");
+<<<<<<< HEAD
+
+  const url = `https://api.sygictravelapi.com/1.2/en/places/list?query=${city}`;
+  const options = { headers: { 'x-api-key': 'pi9AODHpaqUOdUTgNweA7LbzxbJFKkD7O9fZ0We8' } };
+=======
   console.log("This is the city in getTravelInfo: ", city);
   const url1 = `https://api.sygictravelapi.com/1.2/en/places/list?limit=1&query=${city}`;
   const options = { headers: { "x-api-key": "pi9AODHpaqUOdUTgNweA7LbzxbJFKkD7O9fZ0We8" } };
+>>>>>>> fa9c7422f466a6afcb00e55c1fb582fd6c0910ad
   axios
     .get(url1, options)
     .then((response1) => {
