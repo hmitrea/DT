@@ -26,9 +26,10 @@ const Home = () => {
   const [favorites, setFavorites] = useState([]);
   // array of favs we got on initial load
   const [query, setQuery] = useState("");
-  // FavIcon condition
-  const [iconStatus, setFavIcon] = useState(false);
   // save users search in case he wants to add it to favs(we only save his query, not actual country data
+  const [iconStatus, setFavIcon] = useState(false);
+  // FavIcon condition
+  
   // since its different every time)
 
   // initial load
@@ -44,6 +45,7 @@ const Home = () => {
   }, []);
   // fires up on search submit and on click of fav city
   const grabLocationData = (location) => {
+    console.log('Grabbing location')
     if (!location) return;
     // change the format of incoming string to add if as params
     const locationString = location
@@ -95,7 +97,7 @@ const Home = () => {
           <div className="welcoming">Welcome, {username}!</div>
         </div>
         <div id="middleColumn"></div>
-        <div className="rightColumn">
+        <div id="rightColumn">
           <Favorites
             favorites={favorites}
             grabLocationData={grabLocationData}
@@ -107,29 +109,34 @@ const Home = () => {
   }
 
   // Determine star icon based on whether current city is a favorite or not
+  const favIcon =( 
+    <span className="favIcon empty-icon">
+      <FAIcon
+        onClick={() => {
+          toggleFav(query);
+        }}
+        size="2x"
+        icon={regStar}
+        style={{ color: "white" }}
+      />
+  </span>
+  );
   const values = current.userQuery.split(",").map((elem) => elem.trim());
-  const favIcon = favorites.some(obj => obj['city']=values[0]) ? (
-  <span className="favIcon solid-icon">
-    <FAIcon
-      onClick={() => {
-        toggleFav(query);
-      }}
-      size="2x"
-      icon={solidStar}
-      style={{ color: "yellow" }}
-    />
-  </span>) : (
-      <span className="favIcon empty-icon">
+  // If the favorites array is not empty
+  if (favorites.length > 0){
+    // Check if favorites has an object where the city is equal to our current city.
+    const favIcon = favorites.some(obj => obj['city']=values[0]) ? (
+      <span className="favIcon solid-icon">
         <FAIcon
           onClick={() => {
             toggleFav(query);
           }}
           size="2x"
-          icon={regStar}
-          style={{ color: "white" }}
+          icon={solidStar}
+          style={{ color: "yellow" }}
         />
-      </span>
-  );
+      </span>) : favIcon
+  }
 
   return (
     <div id="main">
