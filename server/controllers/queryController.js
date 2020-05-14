@@ -250,6 +250,7 @@ queryController.getFavs = (req, res, next) => {
             {city: '<city_name>', country: '<country_name>'} ]
       */
       res.locals.user.favsArray = data.rows;
+      console.log('getFavs: data.rows =', data.rows);
       return next();
     })
     .catch((err) => {
