@@ -58,7 +58,8 @@ queryController.addFav = (req, res, next) => {
   // console.log(req.params);
   const { email } = req.params;
   const { city } = req.params;
-  const { country } = req.params;
+  const country = req.params.country.toLowerCase();
+
   const reqParams = [email, city, country];
   console.log('This is the req.params in addFav: ', reqParams);
 
@@ -69,7 +70,7 @@ queryController.addFav = (req, res, next) => {
   const addCityQuery = `INSERT INTO cities (city_name, country_id)
                           VALUES (
                               $1, 
-                              (SELECT id FROM countries WHERE country_name = $2 OR alternate_name = $2)
+                              (SELECT id FROM countries WHERE lower(country_name) = $2 OR alternate_name = $2)
                           )`;
 
   // check if favourite exists in database first
@@ -84,8 +85,21 @@ queryController.addFav = (req, res, next) => {
                           VALUES (
                               (SELECT id FROM users WHERE spotify_email = $1),
                               (SELECT id FROM cities WHERE city_name = $2),
-                              (SELECT id FROM countries WHERE country_name = $3 OR alternate_name = $3)
+                              (SELECT id FROM countries WHERE lower(country_name) = $3 OR alternate_name = $3)
                           )`;
+
+  const deleteQuery = `DELETE 
+                         FROM countries_cities_users 
+                        WHERE user_id = (SELECT id 
+                        FROM users 
+                       WHERE spotify_email = $1)
+                         AND city_id = (SELECT id 
+                                          FROM cities 
+                                         WHERE city_name = $2)
+                         AND country_id = (SELECT id 
+                                             FROM countries 
+                                            WHERE country_name = $3
+                                               OR alternate_name = $2)`;
 
   // first query database to see if a city exists in the cities table
   db.query(checkCityQuery, [city])
@@ -126,19 +140,6 @@ queryController.addFav = (req, res, next) => {
               });
             // if rows returned then delete favorite.
           } else {
-            const deleteQuery = `DELETE 
-                                     FROM countries_cities_users 
-                                    WHERE user_id = (SELECT id 
-                                                       FROM users 
-                                                       WHERE spotify_email = $1)
-                                      AND city_id = (SELECT id 
-                                                       FROM cities 
-                                                      WHERE city_name = $2)
-                                      AND country_id = (SELECT id 
-                                                          FROM countries 
-                                                         WHERE country_name = $3
-                                                            OR alternate_name = $2)`;
-
             db.query(deleteQuery, [email, city, country])
               .then((response) => {
                 console.log('response **** ', response);
