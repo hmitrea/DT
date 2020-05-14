@@ -17,7 +17,7 @@ import Youtube from "./Youtube";
 import unsplashId from "../../unsplash_id";
 
 const Home = () => {
-  const [current, setCurrent] = useState({});
+  const [current, setCurrent] = useState({});  
   // current is the bigAssObject we receive from "grabLocationData" that feeds most of the components with data
   const [username, setUserName] = useState("");
   // for welcoming
@@ -103,17 +103,30 @@ const Home = () => {
       </div>
     );
   }
-  const FavIcon = (
-    <span className="favIcon">
-      <FAIcon
-        onClick={() => {
-          toggleFav(query);
-        }}
-        size="2x"
-        icon={regStar}
-        style={{ color: "white" }}
-      />
-    </span>
+
+  // Determine star icon based on whether current city is a favorite or not
+  const values = current.userQuery.split(",").map((elem) => elem.trim());
+  const favIcon = favorites.some(obj => obj['city']=values[0]) ? (
+  <span className="favIcon solid-icon">
+    <FAIcon
+      onClick={() => {
+        toggleFav(query);
+      }}
+      size="2x"
+      icon={solidStar}
+      style={{ color: "yellow" }}
+    />
+  </span>) : (
+      <span className="favIcon empty-icon">
+        <FAIcon
+          onClick={() => {
+            toggleFav(query);
+          }}
+          size="2x"
+          icon={regStar}
+          style={{ color: "white" }}
+        />
+      </span>
   );
 
   return (
@@ -133,7 +146,7 @@ const Home = () => {
       </div>
       <div id="middleColumn">
         <Search grabLocationData={grabLocationData} />
-        <div id="favIcon">{FavIcon}</div>
+        <div id="favIcon">{favIcon}</div>
         <Youtube video={current.youtube} />
         {/* <div id="youtube-container">
           <iframe
