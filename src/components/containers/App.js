@@ -3,6 +3,7 @@ import { Switch, Route, Link } from 'react-router-dom';
 import { FontAwesomeIcon as FAIcon } from '@fortawesome/react-fontawesome';
 import { faSpotify as Spotify } from '@fortawesome/fontawesome-free-brands';
 import Home from './Home';
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   let FavIcon = (
@@ -11,6 +12,7 @@ function App() {
     </span>
   );
   return (
+    <BrowserRouter>
     <div id="app">
       <Switch>
         <Route exact path="/">
@@ -32,6 +34,7 @@ function App() {
         <Route>100 * 4 + 4 = ? That's right. Not found.</Route>
       </Switch>
     </div>
+    </BrowserRouter>
   );
 }
 
