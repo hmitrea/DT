@@ -46,7 +46,6 @@ app.post(
   '/api/toggleFav/:city&:country&:email',
   queryController.addFav,
   queryController.getFavs,
-  queryController.deleteFav,
   (req, res) => {
     res.status(200).send(res.locals.user.favsArray);
   }
