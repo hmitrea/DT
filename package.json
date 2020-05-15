@@ -8,8 +8,8 @@
     "format": "prettier \"src/**/*.{js,jsx}\" --write",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
     "test": "jest --verbose",
-    "start": "set \"NODE_ENV=production\" && node server/app.js",
-    "dev": "set \"NODE_ENV=development\" && concurrently \"webpack-dev-server --open --hot\" \"nodemon server/app.js\"",
+    "start": "set \"NODE_ENV=production\" && node src/server/app.js",
+    "dev": "set \"NODE_ENV=development\" && concurrently \"webpack-dev-server --open --hot\" \"nodemon src/server/app.js\"",
     "build": "set \"NODE_ENV=production\" && \"webpack\""
   },
   "keywords": [],

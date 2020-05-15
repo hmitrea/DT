@@ -21,7 +21,7 @@ function App() {
               <br></br>
               <br></br>
               <a className="black" href="/verify">
-                Login with Spotifyyyyy
+                Login with Spotify
               </a>
             </center>
           </div>
